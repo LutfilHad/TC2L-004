@@ -90,3 +90,13 @@
     background: skyblue;
     color: aliceblue;
 }
+
+.button:hover {
+    background: purple;
+    transition: all 0.3s ease;
+}
+
+.navbar__link:hover {
+    color: aquamarine;
+    transition: all 0.3s ease;
+}

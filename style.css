@@ -6,7 +6,7 @@
 }
 
 .navbar {
-    background: #131313;
+    background: #fce4ec;
     height: 80px;
     display: flex;
     justify-content: center;
@@ -15,13 +15,13 @@
     position: static;
     top: 0;
     z-index: 999;
+    width: 100%;
 }
 
 .navbar__container {
     display: flex;
     justify-content: space-between;
     height: 80px;
-    z-index: 1;
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
@@ -43,10 +43,6 @@
     font-size: 2rem;
 }
 
-.fa-gem {
-    margin-right: 0.5rem;
-}
-
 .navbar__menu {
     display: flex;
     align-items: center;
@@ -59,7 +55,7 @@
 }
 
 .navbar__link {
-    color: white;
+    color: purple;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,3 +97,179 @@
     transition: all 0.3s ease;
 }
 
+.hero {
+    background-color: #fce4ec;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #ff0844;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.hero .button {
+    font-size: 1.2rem;
+    background: #ff0844;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.feature {
+    flex: 1;
+    margin: 0 20px;
+    text-align: center;
+}
+
+.feature h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #ff0844;
+}
+
+.feature p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.testimonials {
+    background-color: #fce4ec;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.testimonials h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #ff0844;
+}
+
+.testimonial {
+    margin-bottom: 30px;
+}
+
+.testimonial p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.testimonial span {
+    display: block;
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #ff0844;
+}
+
+.dashboard {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.dashboard__header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dashboard__header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #ff0844;
+}
+
+.dashboard__header p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.dashboard__overview {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.overview__card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.overview__card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #ff0844;
+}
+
+.overview__card p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.dashboard__recent-activity {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard__recent-activity h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ff0844;
+}
+
+.dashboard__recent-activity ul {
+    list-style: none;
+}
+
+.dashboard__recent-activity li {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.footer__links li {
+    margin: 0 15px;
+}
+
+.footer__links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.footer__links a:hover {
+    text-decoration: underline;
+}

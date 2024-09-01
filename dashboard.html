@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Study Sphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="/STUDYSPHERE.html" id="navbar__logo">Study Sphere</a>
+            <div class="navbar__toggle" id="mobile-menu" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="/dashboard.html" class="navbar__link">Dashboard</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/schedule.html" class="navbar__link">Schedule</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/progress.html" class="navbar__link">Progress</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="/" class="button">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <div class="dashboard__header">
+            <h1>Dashboard</h1>
+            <p>Welcome back, [User Name]!</p>
+        </div>
+
+        <section class="dashboard__overview">
+            <div class="overview__card">
+                <h2>Current Tasks</h2>
+                <p>3 tasks remaining</p>
+                <a href="/tasks.html" class="button">View Tasks</a>
+            </div>
+            <div class="overview__card">
+                <h2>Upcoming Events</h2>
+                <p>Next event: Study Group on Monday</p>
+                <a href="/schedule.html" class="button">View Schedule</a>
+            </div>
+            <div class="overview__card">
+                <h2>Progress</h2>
+                <p>70% completed</p>
+                <a href="/progress.html" class="button">View Progress</a>
+            </div>
+        </section>
+
+        <section class="dashboard__recent-activity">
+            <h2>Recent Activity</h2>
+            <ul>
+                <li>Completed "Chapter 5" - September 15, 2024</li>
+                <li>Added new task: "Prepare for Exam" - September 14, 2024</li>
+                <li>Scheduled "Study Group" - September 13, 2024</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Study Sphere. All rights reserved.</p>
+        <ul class="footer__links">
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/privacy.html">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

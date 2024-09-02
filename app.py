@@ -24,7 +24,7 @@ init_sqlite_db()
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('STUDYSPHERE.html')
 
 @app.route('/signup/', methods=['GET', 'POST'])
 def signup():
@@ -45,7 +45,8 @@ def signup():
                 return redirect(url_for('login'))
         except sqlite3.IntegrityError:
             flash("Email already exists", "danger")
-        except:
+        except Exception as e:
+            print(f"Exception: {e}")
             con.rollback()
             flash("Error in insert operation", "danger")
         
@@ -100,3 +101,4 @@ def view_database():
 
 if __name__ == '__main__':
     app.run(debug=True)
+

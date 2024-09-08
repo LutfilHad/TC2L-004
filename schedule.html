@@ -15,19 +15,45 @@
                         const tbody = document.querySelector('.focus__table tbody');
                         tbody.innerHTML = '';
 
-                        data.forEach(subject => {
-                            const row = document.createElement('tr');
-
-                            row.innerHTML = `
-                                <td>${subject.subject}</td>
-                                <td>${subject.focus_level}</td>
-                            `;
-
-                            tbody.appendChild(row);
-                        });
+                        if (data.length === 0) {
+                            tbody.innerHTML = '<tr><td colspan="2">No subjects to focus on</td></tr>';
+                        } else {
+                            data.forEach(subject => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${subject.subject}</td>
+                                    <td>${subject.focus_level}</td>
+                                `;
+                                tbody.appendChild(row);
+                            });
+                        }
                     })
                     .catch(error => {
                         console.error('Error fetching focus areas:', error);
+                    });
+            }
+
+            function fetchSchedule() {
+                fetch('/generate_schedule')
+                    .then(response => response.json())
+                    .then(data => {
+                        const scheduleContainer = document.getElementById('schedule-container');
+                        scheduleContainer.innerHTML = '';  
+
+                        if (data.length === 0) {
+                            scheduleContainer.innerHTML = '<p>No schedule available.</p>';
+                        } else {
+                            const ul = document.createElement('ul');
+                            data.forEach(scheduleItem => {
+                                const li = document.createElement('li');
+                                li.textContent = scheduleItem;
+                                ul.appendChild(li);
+                            });
+                            scheduleContainer.appendChild(ul);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error generating schedule:', error);
                     });
             }
 
@@ -37,6 +63,7 @@
                 event.preventDefault();
 
                 const formData = new FormData(this);
+
                 fetch('/add_results', {
                     method: 'POST',
                     body: formData
@@ -44,6 +71,7 @@
                 .then(response => response.text())
                 .then(() => {
                     fetchFocusAreas();
+                    fetchSchedule(); 
                 })
                 .catch(error => {
                     console.error('Error submitting results:', error);
@@ -53,7 +81,7 @@
             document.getElementById('add-subject').addEventListener('click', function () {
                 const subjectContainer = document.getElementById('subjects-container');
                 const subjectCount = subjectContainer.children.length;
-                
+
                 if (subjectCount < 8) {
                     const newSubjectDiv = document.createElement('div');
                     newSubjectDiv.className = 'form-group';
@@ -143,6 +171,12 @@
                 <tbody>
                 </tbody>
             </table>
+        </div>
+
+        <div class="dashboard__recent-activity">
+            <h2>Your Generated Study Schedule</h2>
+            <div id="schedule-container">
+            </div>
         </div>
     </section>
 

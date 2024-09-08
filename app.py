@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 import sqlite3
+from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS
 
 DATABASE = 'subjects.db'
 
@@ -97,5 +99,29 @@ def fetch_schedule():
         print(f"Error in fetch_schedule: {e}")
         return jsonify([]), 500
 
+@app.route('/generate_schedule', methods=['GET'])
+def generate_schedule():
+    try:
+        with get_db() as conn:
+            cursor = conn.execute('SELECT subject, focus_level FROM subjects')
+            subjects = cursor.fetchall()
+
+            # Generate a schedule based on focus levels
+            schedule = []
+            for subject in subjects:
+                if subject['focus_level'] == 'High':
+                    schedule.append(f"Study {subject['subject']} for 2 hours a day")
+                elif subject['focus_level'] == 'Medium':
+                    schedule.append(f"Study {subject['subject']} for 1 hour a day")
+                elif subject['focus_level'] == 'Low':
+                    schedule.append(f"Study {subject['subject']} for 30 minutes a day")
+                # You can customize this logic further
+
+            return jsonify(schedule)
+    except Exception as e:
+        print(f"Error generating schedule: {e}")
+        return jsonify([]), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -24,6 +24,30 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    function fetchSchedule() {
+        fetch('/generate_schedule')
+            .then(response => response.json())
+            .then(data => {
+                const scheduleContainer = document.getElementById('schedule-container');
+                scheduleContainer.innerHTML = ''; 
+
+                if (data.length === 0) {
+                    scheduleContainer.innerHTML = '<p>No schedule available.</p>';
+                } else {
+                    const ul = document.createElement('ul');
+                    data.forEach(scheduleItem => {
+                        const li = document.createElement('li');
+                        li.textContent = scheduleItem;
+                        ul.appendChild(li);
+                    });
+                    scheduleContainer.appendChild(ul);
+                }
+            })
+            .catch(error => {
+                console.error('Error generating schedule:', error);
+            });
+    }
+
     fetchFocusAreas();
 
     document.getElementById('results-form').addEventListener('submit', function (event) {
@@ -38,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.text())
         .then(() => {
             fetchFocusAreas();
+            fetchSchedule(); 
         })
         .catch(error => {
             console.error('Error submitting results:', error);
@@ -68,4 +93,3 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-

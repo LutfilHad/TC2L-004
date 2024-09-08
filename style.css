@@ -273,3 +273,29 @@ footer {
 .footer__links a:hover {
     text-decoration: underline;
 }
+
+.schedule__table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.schedule__table th, .schedule__table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.schedule__table th {
+    background-color: #fce4ec;
+    color: #ff0844;
+    font-weight: bold;
+}
+
+.schedule__table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

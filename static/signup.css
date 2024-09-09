@@ -1,69 +1,115 @@
+/* General body styling */
 body {
-  background-color: hsla(351, 100%, 86%, 0.496);
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 50px;
+  font-family: 'Arial', sans-serif;
+  background-color: #fce4ec; /* Light Pink Background */
+  color: #880e4f; /* Dark Pink/Purple Text */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 h2 {
-  color: purple;
-  font-size: 2em;
+  text-align: center;
+  color: #d81b60; /* Red/Pink Header */
+  margin-bottom: 20px;
 }
 
 form {
-  background-color: pink;
-  border-radius: 10px;
-  display: inline-block;
+  background-color: #f8bbd0; /* Very Light Pink */
   padding: 20px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
 }
 
 label {
-  color: purple;
   font-weight: bold;
+  color: #ad1457; /* Darker Pink */
 }
 
-input {
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid purple;
+  border: 1px solid #ec407a; /* Light Red/Pink border */
   border-radius: 5px;
-  width: 100%;
-  box-sizing: border-box;
+  background-color: #fce4ec; /* Light pink background for inputs */
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #d81b60; /* Pink border on focus */
 }
 
 button {
-  background-color: purple;
+  width: 100%;
+  padding: 10px;
+  background-color: #d81b60; /* Vibrant Pink Button */
   color: white;
-  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: red;
+  background-color: #ad1457; /* Darker pink on hover */
 }
 
+/* Styling for additional buttons inside the form */
+#exam-results .subject-grade button {
+  background-color: #ec407a; /* Lighter Red Button */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#exam-results .subject-grade button:hover {
+  background-color: #d81b60; /* Darker Pink on hover */
+}
+
+#exam-results .subject-grade {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Link Styling */
 a {
-  color: purple;
+  color: #ad1457; /* Darker Pink Link */
   text-decoration: none;
 }
 
 a:hover {
-  color: red;
+  color: #880e4f; /* Even darker on hover */
+  text-decoration: underline;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+/* Responsive Styling */
+@media (max-width: 600px) {
+  form {
+      width: 90%;
+  }
 
-li {
-  background-color: lightpink;
-  color: purple;
-  margin: 5px 0;
-  padding: 10px;
-  border-left: 5px solid purple;
+  .subject-grade {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .subject-grade label {
+      margin-right: 5px;
+  }
 }

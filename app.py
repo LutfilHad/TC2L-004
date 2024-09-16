@@ -13,12 +13,12 @@ def init_sqlite_db():
         cur.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT,           -- Optional
+            username TEXT,
             name TEXT NOT NULL,
             age INTEGER NOT NULL,
             email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
-            exam_results TEXT         -- Optional JSON to store subjects and grades
+            exam_results TEXT
         );
         ''')
         con.commit()
@@ -42,11 +42,11 @@ def signup():
         age = request.form['age']
         email = request.form['email']
         password = request.form['password']
-        subjects = request.form.getlist('subjects[]')  # Get the list of subjects
-        grades = request.form.getlist('grades[]')      # Get the list of grades
+        subjects = request.form.getlist('subjects[]')
+        grades = request.form.getlist('grades[]')
 
         exam_results = dict(zip(subjects, grades))
-        exam_results_json = json.dumps(exam_results)  # Convert to JSON to store in the database
+        exam_results_json = json.dumps(exam_results)
 
         hashed_password = generate_password_hash(password)
 
@@ -79,15 +79,15 @@ def login():
             user = cur.fetchone()
 
             if user:
-                stored_hash = user[4]  # Password is in the 4th column
+                stored_hash = user[4]
 
                 if check_password_hash(stored_hash, password):
                     session['user_id'] = user[0]
-                    session['username'] = user[1]  # Username is user's name
-                    session['name'] = user[1]      # Storing name in session
-                    session['age'] = user[2]       # Storing age in session
-                    session['email'] = user[3]     # Storing email in session
-                    session['exam_results'] = user[5]  # Storing exam results in session
+                    session['username'] = user[1]
+                    session['name'] = user[1]
+                    session['age'] = user[2]
+                    session['email'] = user[3]
+                    session['exam_results'] = user[5]
                     flash('Login successful!', 'success')
                     return redirect(url_for('dashboard'))
                 else:
@@ -101,7 +101,7 @@ def login():
 @app.route('/dashboard/')
 def dashboard():
     if 'username' in session:
-        exam_results = json.loads(session['exam_results'])  # Convert JSON back to dict
+        exam_results = json.loads(session['exam_results'])
         return render_template('dashboard.html', 
                                name=session['name'], 
                                age=session['age'], 
@@ -114,7 +114,7 @@ def dashboard():
 # Route for logging out
 @app.route('/logout/')
 def logout():
-    session.clear()  # Clear the entire session
+    session.clear()
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 

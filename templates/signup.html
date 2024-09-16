@@ -3,28 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='log-in.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}">
     <title>Sign Up</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Sign Up</h2>
-        <form action="{{ url_for('signup') }}" method="POST">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" name="username" required>
+    <h2>Sign Up</h2>
+    <form method="POST" action="{{ url_for('signup') }}">
+        <label>Name:</label>
+        <input type="text" name="name" required>
+        <br>
+        <label>Age:</label>
+        <input type="number" name="age" required>
+        <br>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <br>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        <br>
+
+        <h3>Recent Exam Results:</h3>
+        <div id="exam-results">
+            <div class="subject-grade">
+                <label>Subject:</label>
+                <input type="text" name="subjects[]" required>
+                <label>Grade:</label>
+                <select name="grades[]" required>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+                <button type="button" onclick="removeSubject(this)">Remove</button>
             </div>
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" name="email" required>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" name="password" required>
-            </div>
-            <button type="submit">Sign Up</button>
-        </form>
-        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
-    </div>
+        </div>
+        <button type="button" onclick="addSubject()">Add Another Subject</button>
+        <br>
+        <button type="submit">Sign Up</button>
+
+        <!-- Moved the login section here -->
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </form>
+
+    <script>
+        function addSubject() {
+            const examResultsDiv = document.getElementById('exam-results');
+            const newSubjectGradeDiv = document.createElement('div');
+            newSubjectGradeDiv.classList.add('subject-grade');
+            newSubjectGradeDiv.innerHTML = `
+                <label>Subject:</label>
+                <input type="text" name="subjects[]" required>
+                <label>Grade:</label>
+                <select name="grades[]" required>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+                <button type="button" onclick="removeSubject(this)">Remove</button>
+            `;
+            examResultsDiv.appendChild(newSubjectGradeDiv);
+        }
+
+        function removeSubject(button) {
+            button.parentElement.remove();
+        }
+    </script>
 </body>
 </html>

@@ -13,11 +13,12 @@ def init_sqlite_db():
         cur.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,           -- Optional
             name TEXT NOT NULL,
             age INTEGER NOT NULL,
             email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
-            exam_results TEXT NOT NULL
+            exam_results TEXT         -- Optional JSON to store subjects and grades
         );
         ''')
         con.commit()
@@ -116,6 +117,17 @@ def logout():
     session.clear()  # Clear the entire session
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
+
+# Route for viewing the database (console output)
+@app.route('/view_database/')
+def view_database():
+    with sqlite3.connect('all.db') as con:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM users")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+    return "Check your console for database entries."
 
 if __name__ == '__main__':
     app.run(debug=True)

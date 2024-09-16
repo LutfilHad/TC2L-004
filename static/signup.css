@@ -1,115 +1,95 @@
-/* General body styling */
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #fce4ec; /* Light Pink Background */
-  color: #880e4f; /* Dark Pink/Purple Text */
-  margin: 0;
-  padding: 0;
+  background-color: #f0a1c5;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 h2 {
+  position: absolute;
+  top: 20px; /* Adjusts how far down the "Sign Up" title is from the top */
+  font-size: 28px;
   text-align: center;
-  color: #d81b60; /* Red/Pink Header */
-  margin-bottom: 20px;
 }
 
 form {
-  background-color: #f8bbd0; /* Very Light Pink */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
   width: 300px;
+  margin-top: 100px; /* Adjusts distance between title and form */
 }
 
 label {
-  font-weight: bold;
-  color: #ad1457; /* Darker Pink */
+  margin-bottom: 5px;
+  font-size: 14px;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="password"],
-select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ec407a; /* Light Red/Pink border */
-  border-radius: 5px;
-  background-color: #fce4ec; /* Light pink background for inputs */
-}
-
-input:focus,
-select:focus {
-  outline: none;
-  border-color: #d81b60; /* Pink border on focus */
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #d81b60; /* Vibrant Pink Button */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #ad1457; /* Darker pink on hover */
-}
-
-/* Styling for additional buttons inside the form */
-#exam-results .subject-grade button {
-  background-color: #ec407a; /* Lighter Red Button */
-  border: none;
-  border-radius: 5px;
-  color: white;
-  padding: 5px 10px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-#exam-results .subject-grade button:hover {
-  background-color: #d81b60; /* Darker Pink on hover */
-}
-
-#exam-results .subject-grade {
+input, select {
+  padding: 8px;
   margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
-/* Link Styling */
-a {
-  color: #ad1457; /* Darker Pink Link */
+button[type="submit"] {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #2980b9;
+}
+
+p {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+p a {
+  color: #3498db;
   text-decoration: none;
 }
 
-a:hover {
-  color: #880e4f; /* Even darker on hover */
+p a:hover {
   text-decoration: underline;
 }
 
-/* Responsive Styling */
-@media (max-width: 600px) {
-  form {
-      width: 90%;
-  }
+button[type="button"] {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px;
+  font-size: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
 
-  .subject-grade {
-      flex-direction: column;
-      align-items: flex-start;
-  }
+button[type="button"]:hover {
+  background-color: #c0392b;
+}
 
-  .subject-grade label {
-      margin-right: 5px;
-  }
+.subject-grade {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.subject-grade input {
+  width: 60%;
+}
+
+.subject-grade select {
+  width: 25%;
 }

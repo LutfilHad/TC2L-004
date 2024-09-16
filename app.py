@@ -84,9 +84,10 @@ def login():
 
                 if check_password_hash(stored_hash, password):
                     session['user_id'] = user[0]
-                    session['username'] = user[1]
-                    session['name'] = user[1]  # Storing name in session
-                    session['age'] = user[2]   # Storing age in session
+                    session['username'] = user[1]  # Username is user's name
+                    session['name'] = user[1]      # Storing name in session
+                    session['age'] = user[2]       # Storing age in session
+                    session['email'] = user[3]     # Storing email in session
                     session['exam_results'] = user[5]  # Storing exam results in session
                     flash('Login successful!', 'success')
                     return redirect(url_for('dashboard'))
@@ -101,18 +102,15 @@ def login():
 @app.route('/dashboard/')
 def dashboard():
     if 'username' in session:
-        # Create a user dictionary with the session details
-        user = {
-            'name': session['name'],
-            'age': session['age'],
-            'email': session['username'],
-            'exam_results': json.loads(session['exam_results'])  # Convert JSON back to dict
-        }
-        return render_template('dashboard.html', user=user)
+        exam_results = json.loads(session['exam_results'])  # Convert JSON back to dict
+        return render_template('dashboard.html', 
+                               name=session['name'], 
+                               age=session['age'], 
+                               email=session['email'],  # Display the actual email
+                               exam_results=exam_results)
     else:
         flash('Please log in to access your dashboard.', 'danger')
         return redirect(url_for('login'))
-
 
 # Route for logging out
 @app.route('/logout/')

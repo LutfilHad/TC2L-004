@@ -114,7 +114,6 @@
                 <span class="bar"></span>
             </div>
             <ul class="navbar__menu">
-
                 <li class="navbar__item">
                     <a href="/schedule.html" class="navbar__link">Schedule</a>
                 </li>
@@ -137,7 +136,8 @@
         <div class="dashboard__recent-activity">
             <h2>Input Examination Results</h2>
             <form id="results-form">
-                <div id="subjects-container">
+                <fieldset id="subjects-container">
+                    <legend>Subjects</legend>
                     <div class="form-group">
                         <label for="subject1">Subject 1:</label>
                         <input type="text" id="subject1" name="subject1" required>
@@ -151,7 +151,7 @@
                             <option value="F">F</option>
                         </select>
                     </div>
-                </div>
+                </fieldset>
                 <button type="button" id="add-subject" class="button">Add More Subjects</button>
                 <button type="submit" class="button">Submit Results</button>
             </form>

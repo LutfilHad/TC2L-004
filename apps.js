@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Fetch focus areas from the server
     function fetchFocusAreas() {
         fetch('/fetch_schedule')
             .then(response => response.json())
             .then(data => {
                 const tbody = document.querySelector('.focus__table tbody');
-                tbody.innerHTML = '';
+                tbody.innerHTML = '';  // Clear previous table contents
 
                 if (data.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="2">No subjects to focus on</td></tr>';
@@ -24,12 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    // Fetch study schedule from the server
     function fetchSchedule() {
         fetch('/generate_schedule')
             .then(response => response.json())
             .then(data => {
                 const scheduleContainer = document.getElementById('schedule-container');
-                scheduleContainer.innerHTML = ''; 
+                scheduleContainer.innerHTML = '';  // Clear previous schedule
 
                 if (data.length === 0) {
                     scheduleContainer.innerHTML = '<p>No schedule available.</p>';
@@ -48,12 +50,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    // Initial fetch when page loads
     fetchFocusAreas();
 
+    // Handle form submission to submit results and update the UI
     document.getElementById('results-form').addEventListener('submit', function (event) {
-        event.preventDefault();
+        event.preventDefault();  // Prevent the default form submission
 
-        const formData = new FormData(this);
+        const formData = new FormData(this);  // Collect form data
 
         fetch('/add_results', {
             method: 'POST',
@@ -61,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.text())
         .then(() => {
+            // Refresh the focus areas and schedule after successful submission
             fetchFocusAreas();
             fetchSchedule(); 
         })
@@ -69,13 +74,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Handle the addition of more subjects (up to 8)
     document.getElementById('add-subject').addEventListener('click', function () {
         const subjectContainer = document.getElementById('subjects-container');
-        const subjectCount = subjectContainer.children.length;
+        const subjectCount = subjectContainer.querySelectorAll('.form-group').length;
 
-        if (subjectCount < 8) {
+        if (subjectCount < 8) {  // Limit to 8 subjects
             const newSubjectDiv = document.createElement('div');
-            newSubjectDiv.className = 'form-group';
+            newSubjectDiv.className = 'form-group';  // Add form-group class for styling
             newSubjectDiv.innerHTML = `
                 <label for="subject${subjectCount + 1}">Subject ${subjectCount + 1}:</label>
                 <input type="text" id="subject${subjectCount + 1}" name="subject${subjectCount + 1}" required>

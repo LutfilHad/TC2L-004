@@ -35,21 +35,29 @@ def setup():
 def add_results():
     try:
         form_data = request.form
-        subjects = [(form_data.get(f'subject{i+1}'), form_data.get(f'grade{i+1}')) for i in range(8) if form_data.get(f'subject{i+1}')]
-
-        with get_db() as conn:
-            conn.execute('DELETE FROM results')
-            conn.commit()
-
-            for subject, grade in subjects:
-                if grade in ['E', 'F', 'D', 'C', 'B', 'A']:
-                    conn.execute('''
-                        INSERT INTO results (subject, grade)
-                        VALUES (?, ?)
-                    ''', (subject, grade))
-            
-            update_focus_areas()
         
+        # Collect all subjects and grades dynamically from the form
+        subjects = []
+        for key, value in form_data.items():
+            if key.startswith('subject') and value:
+                index = key.replace('subject', '')  # Get the subject number from the key
+                grade_key = f'grade{index}'  # Find the corresponding grade field
+                grade = form_data.get(grade_key)
+                if grade:
+                    subjects.append((value, grade))
+
+        if subjects:
+            with get_db() as conn:
+                conn.execute('DELETE FROM results')  # Clear previous results
+                conn.executemany('''
+                    INSERT INTO results (subject, grade)
+                    VALUES (?, ?)
+                ''', subjects)
+                conn.commit()
+
+                # Update focus areas based on the new results
+                update_focus_areas()
+
         return 'Results submitted', 200
     except Exception as e:
         print(f"Error in add_results: {e}")

@@ -8,7 +8,7 @@ app.secret_key = 'your_secret_key'
 
 # Initialize the SQLite Database (using all.db)
 def init_sqlite_db():
-    with sqlite3.connect('all.db') as con:  # Changed the database to all.db
+    with sqlite3.connect('all.db') as con:
         cur = con.cursor()
         cur.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -17,7 +17,7 @@ def init_sqlite_db():
             age INTEGER NOT NULL,
             email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
-            exam_results TEXT NOT NULL  -- Stores JSON string of subjects and grades
+            exam_results TEXT NOT NULL
         );
         ''')
         con.commit()
@@ -44,15 +44,13 @@ def signup():
         subjects = request.form.getlist('subjects[]')  # Get the list of subjects
         grades = request.form.getlist('grades[]')      # Get the list of grades
 
-        # Combine subjects and grades into a dictionary
         exam_results = dict(zip(subjects, grades))
         exam_results_json = json.dumps(exam_results)  # Convert to JSON to store in the database
 
-        # Generate password hash
         hashed_password = generate_password_hash(password)
 
         try:
-            with sqlite3.connect('all.db') as con:  # Changed the database to all.db
+            with sqlite3.connect('all.db') as con:
                 cur = con.cursor()
                 cur.execute('''INSERT INTO users (name, age, email, password, exam_results)
                                VALUES (?, ?, ?, ?, ?)''', 
@@ -62,8 +60,8 @@ def signup():
                 return redirect(url_for('login'))
         except sqlite3.IntegrityError:
             flash('Email already exists!', 'danger')
-        except Exception:
-            flash('An error occurred during sign-up.', 'danger')
+        except Exception as e:
+            flash(f'An error occurred during sign-up: {str(e)}', 'danger')
 
     return render_template('signup.html')
 
@@ -74,7 +72,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        with sqlite3.connect('all.db') as con:  # Changed the database to all.db
+        with sqlite3.connect('all.db') as con:
             cur = con.cursor()
             cur.execute("SELECT * FROM users WHERE email = ?", (email,))
             user = cur.fetchone()
@@ -106,7 +104,7 @@ def dashboard():
         return render_template('dashboard.html', 
                                name=session['name'], 
                                age=session['age'], 
-                               email=session['email'],  # Display the actual email
+                               email=session['email'], 
                                exam_results=exam_results)
     else:
         flash('Please log in to access your dashboard.', 'danger')
@@ -115,7 +113,7 @@ def dashboard():
 # Route for logging out
 @app.route('/logout/')
 def logout():
-    session.clear()  # Clear the entire session at once
+    session.clear()  # Clear the entire session
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 

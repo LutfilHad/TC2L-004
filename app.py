@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify
 import sqlite3
-from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS
 
 DATABASE = 'subjects.db'
 
@@ -44,7 +42,7 @@ def add_results():
             conn.commit()
 
             for subject, grade in subjects:
-                if grade in ['E', 'F']:
+                if grade in ['E', 'F', 'D', 'C', 'B', 'A']:
                     conn.execute('''
                         INSERT INTO results (subject, grade)
                         VALUES (?, ?)
@@ -106,7 +104,6 @@ def generate_schedule():
             cursor = conn.execute('SELECT subject, focus_level FROM subjects')
             subjects = cursor.fetchall()
 
-            # Generate a schedule based on focus levels
             schedule = []
             for subject in subjects:
                 if subject['focus_level'] == 'High':
@@ -115,7 +112,6 @@ def generate_schedule():
                     schedule.append(f"Study {subject['subject']} for 1 hour a day")
                 elif subject['focus_level'] == 'Low':
                     schedule.append(f"Study {subject['subject']} for 30 minutes a day")
-                # You can customize this logic further
 
             return jsonify(schedule)
     except Exception as e:
@@ -124,4 +120,3 @@ def generate_schedule():
 
 if __name__ == '__main__':
     app.run(debug=True)
-

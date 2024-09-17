@@ -16,7 +16,6 @@
                 <span class="bar"></span>
             </div>
             <ul class="navbar__menu">
-                
                 <li class="navbar__item">
                     <a href="/schedule.html" class="navbar__link">Schedule</a>
                 </li>
@@ -35,9 +34,9 @@
         <p>Your personalized study assistant. Track your progress, organize your schedule, and reach your goals.</p>
         <a href="/signup.html" class="button">Get Started</a>
     </div>
+
     <div class="main__img--container">
-        <img src="image/undraw_scrum_board_re_wk7v.svg"
-        alt="pic" id="main__img">
+        <img src="image/undraw_scrum_board_re_wk7v.svg" alt="pic" id="main__img">
     </div>
 
     <section class="features">
@@ -55,16 +54,27 @@
         </div>
     </section>
 
-    <section class="testimonials">
-        <h2>What Our Users Say</h2>
-        <div class="testimonial">
-            <p>"Study Sphere helped me organize my study schedule and achieve my goals!"</p>
-            <span>- LTG.</span>
-        </div>
-        <div class="testimonial">
-            <p>"The progress tracking feature keeps me motivated and on track."</p>
-            <span>- Munqiz.</span>
-        </div>
+    <section class="submit-results">
+        <h2>Submit Your Study Results</h2>
+        <form id="resultsForm" method="POST" action="/add_results">
+            <label for="subject1">Subject 1:</label>
+            <input type="text" id="subject1" name="subject1" placeholder="Enter subject">
+            <label for="grade1">Grade 1:</label>
+            <input type="text" id="grade1" name="grade1" placeholder="Enter grade">
+            <br>
+            <label for="subject2">Subject 2:</label>
+            <input type="text" id="subject2" name="subject2" placeholder="Enter subject">
+            <label for="grade2">Grade 2:</label>
+            <input type="text" id="grade2" name="grade2" placeholder="Enter grade">
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section class="generate-schedule">
+        <h2>Your Study Schedule</h2>
+        <button onclick="fetchSchedule()">Generate Schedule</button>
+        <ul id="scheduleList"></ul>
     </section>
 
     <footer>
@@ -75,6 +85,40 @@
             <li><a href="/privacy.html">Privacy Policy</a></li>
         </ul>
     </footer>
+
+    <script>
+        // Handle the form submission to submit results
+        document.getElementById('resultsForm').onsubmit = async function(event) {
+            event.preventDefault();  // Prevent the default form submission behavior
+
+            let formData = new FormData(document.getElementById('resultsForm'));
+
+            const response = await fetch('/add_results', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert('Results submitted successfully');
+            } else {
+                alert('Error submitting results');
+            }
+        };
+
+        // Fetch the generated schedule and display it
+        async function fetchSchedule() {
+            const response = await fetch('/generate_schedule');
+            const schedule = await response.json();
+
+            let scheduleList = document.getElementById('scheduleList');
+            scheduleList.innerHTML = '';  // Clear any previous schedule
+
+            schedule.forEach(item => {
+                let li = document.createElement('li');
+                li.textContent = item;
+                scheduleList.appendChild(li);
+            });
+        }
+    </script>
 </body>
 </html>
-

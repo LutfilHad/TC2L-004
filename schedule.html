@@ -3,77 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Schedule Generator</title>
-    <link rel="stylesheet" href="style.css">  <!-- Link to external CSS file -->
+    <title>Study Schedule</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="/STUDYSPHERE.html" id="navbar__logo">Study Sphere</a>
+            <div class="navbar__toggle" id="mobile-menu" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="/schedule.html" class="navbar__link">Schedule</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/progress.html" class="navbar__link">Progress</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="/" class="button">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <h1>Study Schedule Generator</h1>
-
-    <div id="subjects-container">
-        <!-- Subject inputs will be added here -->
+    <div class="dashboard">
+        <div class="dashboard__header">
+            <h1>Study Schedule</h1>
+        </div>
+        <div class="dashboard__overview">
+            <form id="scheduleForm">
+                <div id="subjectFields">
+                    <div class="overview__card">
+                        <label for="subject1">Subject 1:</label>
+                        <input type="text" id="subject1" name="subject1" required>
+                        <label for="grade1">Grade:</label>
+                        <select id="grade1" name="grade1" required>
+                            <option value="">Select Grade</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="button" onclick="addSubjectField()">Add Another Subject</button>
+                <button type="submit" class="button">Submit</button>
+            </form>
+        </div>
     </div>
 
-    <button id="add-subject-btn">Add Subject</button>
-    <button id="submit-btn">Submit</button>
+    <footer>
+        <p>&copy; 2024 Study Sphere. All rights reserved.</p>
+        <ul class="footer__links">
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/privacy.html">Privacy Policy</a></li>
+        </ul>
+    </footer>
 
     <script>
-        let subjectCount = 0;
-        const maxSubjects = 8;
-        const subjectsContainer = document.getElementById('subjects-container');
+        let subjectCount = 1;
 
-        document.getElementById('add-subject-btn').addEventListener('click', function() {
-            if (subjectCount < maxSubjects) {
-                const subjectEntry = document.createElement('div');
-                subjectEntry.classList.add('subject-entry');
-                subjectEntry.innerHTML = `
-                    <label for="subject-${subjectCount}">Subject ${subjectCount + 1}:</label>
-                    <input type="text" id="subject-${subjectCount}" placeholder="Enter subject name">
-                    <label for="grade-${subjectCount}">Grade:</label>
-                    <select id="grade-${subjectCount}">
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                    </select>
-                `;
-                subjectsContainer.appendChild(subjectEntry);
-                subjectCount++;
-            } else {
-                alert("You can add up to 8 subjects only.");
-            }
-        });
+        function addSubjectField() {
+            subjectCount++;
+            const subjectFields = document.getElementById('subjectFields');
+            const newField = document.createElement('div');
+            newField.classList.add('overview__card');
+            newField.innerHTML = `
+                <label for="subject${subjectCount}">Subject ${subjectCount}:</label>
+                <input type="text" id="subject${subjectCount}" name="subject${subjectCount}" required>
+                <label for="grade${subjectCount}">Grade:</label>
+                <select id="grade${subjectCount}" name="grade${subjectCount}" required>
+                    <option value="">Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+            `;
+            subjectFields.appendChild(newField);
+        }
 
-        document.getElementById('submit-btn').addEventListener('click', function() {
-            const subjects = [];
-            for (let i = 0; i < subjectCount; i++) {
-                const subjectName = document.getElementById(`subject-${i}`).value;
-                const grade = document.getElementById(`grade-${i}`).value;
-                if (subjectName) {
-                    subjects.push({ name: subjectName, grade: grade });
-                }
-            }
-            
-            if (subjects.length > 0) {
-                // Send data to Flask backend
-                fetch('/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ subjects: subjects }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Your schedule has been created. Check the console for details.');
-                    console.log(data.schedule);
-                })
-                .catch(error => console.error('Error:', error));
-            } else {
-                alert("Please add at least one subject.");
-            }
+        document.getElementById('scheduleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/add_results', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => alert(result))
+            .catch(error => alert('Error submitting schedule: ' + error));
         });
     </script>
 </body>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Progress</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="/STUDYSPHERE.html" id="navbar__logo">Study Sphere</a>
+            <div class="navbar__toggle" id="mobile-menu" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="/schedule.html" class="navbar__link">Schedule</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/progress.html" class="navbar__link">Progress</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="/" class="button">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="dashboard__header">
+            <h1>Your Study Progress</h1>
+        </div>
+        <div class="dashboard__overview">
+            <table id="progressTable">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Grade</th>
+                        <th>Focus Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Study Sphere. All rights reserved.</p>
+        <ul class="footer__links">
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/privacy.html">Privacy Policy</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        // Function to fetch and display progress data
+        async function fetchProgress() {
+            const response = await fetch('/fetch_schedule');
+            const progressData = await response.json();
+
+            let progressTableBody = document.querySelector('#progressTable tbody');
+            progressTableBody.innerHTML = '';  // Clear any previous progress data
+
+            progressData.forEach(item => {
+                let row = document.createElement('tr');
+                
+                let subjectCell = document.createElement('td');
+                subjectCell.textContent = item.subject;
+                row.appendChild(subjectCell);
+
+                let gradeCell = document.createElement('td');
+                gradeCell.textContent = getGradeFromFocusLevel(item.focus_level);
+                row.appendChild(gradeCell);
+
+                let focusLevelCell = document.createElement('td');
+                focusLevelCell.textContent = item.focus_level;
+                row.appendChild(focusLevelCell);
+
+                progressTableBody.appendChild(row);
+            });
+        }
+
+        // Function to map focus level back to grade (you might adjust this logic based on your requirements)
+        function getGradeFromFocusLevel(focusLevel) {
+            switch (focusLevel) {
+                case 'High': return 'D or lower';
+                case 'Medium': return 'C';
+                case 'Low': return 'A or B';
+                default: return 'N/A';
+            }
+        }
+
+        // Fetch and display progress when the page loads
+        window.onload = fetchProgress;
+    </script>
+</body>
+</html>

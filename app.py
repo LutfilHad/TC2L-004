@@ -95,10 +95,8 @@ def generate_schedule(exam_results):
 # Route for the home page
 @app.route('/')
 def home():
-    if 'username' in session:
-        return render_template('home.html', username=session['username'])
-    else:
-        return redirect(url_for('login'))
+        return render_template('STUDYSPHERE.html')
+
 
 # Route for the sign-up page
 @app.route('/signup/', methods=['GET', 'POST'])

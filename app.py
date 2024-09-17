@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import json
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -25,6 +26,71 @@ def init_sqlite_db():
 
 # Call the function to initialize the database
 init_sqlite_db()
+
+# Helper function to generate the study schedule
+def generate_schedule(exam_results):
+    schedule = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": [], "Saturday": [], "Sunday": []}
+    total_hours_per_week = 20  # Total hours to distribute among subjects
+    max_hours_per_day = 3  # Maximum hours of study per day
+    weak_grades = ['F', 'D', 'E']  # Grades considered weak
+    subjects = exam_results.keys()
+
+    # Assign more time to weak subjects
+    weak_subjects = {subject: grade for subject, grade in exam_results.items() if grade in weak_grades}
+    non_weak_subjects = {subject: grade for subject, grade in exam_results.items() if grade not in weak_grades}
+
+    # Determine hours per subject (longer for weak subjects)
+    weak_hours = total_hours_per_week * 0.7  # 70% of time for weak subjects
+    non_weak_hours = total_hours_per_week * 0.3  # 30% for stronger subjects
+
+    if weak_subjects:
+        hours_per_weak_subject = weak_hours / len(weak_subjects)
+    else:
+        hours_per_weak_subject = 0
+
+    if non_weak_subjects:
+        hours_per_non_weak_subject = non_weak_hours / len(non_weak_subjects)
+    else:
+        hours_per_non_weak_subject = 0
+
+    # Distribute subjects across the days
+    days = list(schedule.keys())
+    day_index = 0
+
+    # Helper function to add subjects to the schedule
+    def add_to_schedule(subject, hours):
+        nonlocal day_index
+        hours_left = hours
+        while hours_left > 0:
+            available_hours = min(max_hours_per_day, hours_left)
+            day_schedule = schedule[days[day_index]]
+            
+            # If there's room for another subject on the same day
+            if len(day_schedule) < 2 and (day_schedule and available_hours <= 3 - sum(float(item.split(":")[1].split()[0]) for item in day_schedule)):
+                day_schedule.append(f"{subject}: {round(available_hours, 2)} hours")
+                hours_left -= available_hours
+                day_index = (day_index + 1) % 7  # Move to the next day
+            else:
+                # Move to the next day if no room or it's the end of the day
+                day_index = (day_index + 1) % 7
+                if len(schedule[days[day_index]]) < 2:
+                    day_schedule = schedule[days[day_index]]
+                    day_schedule.append(f"{subject}: {round(available_hours, 2)} hours")
+                    hours_left -= available_hours
+                else:
+                    day_index = (day_index + 1) % 7  # Continue to the next day
+
+    # Assign hours for weak subjects
+    for subject in weak_subjects:
+        add_to_schedule(subject, hours_per_weak_subject)
+
+    # Assign hours for non-weak subjects
+    for subject in non_weak_subjects:
+        add_to_schedule(subject, hours_per_non_weak_subject)
+
+    return schedule
+
+
 
 # Route for the home page
 @app.route('/')
@@ -109,6 +175,17 @@ def dashboard():
                                exam_results=exam_results)
     else:
         flash('Please log in to access your dashboard.', 'danger')
+        return redirect(url_for('login'))
+
+# Route for the study schedule page
+@app.route('/schedule/')
+def schedule():
+    if 'username' in session:
+        exam_results = json.loads(session['exam_results'])
+        study_schedule = generate_schedule(exam_results)
+        return render_template('schedule.html', name=session['name'], schedule=study_schedule)
+    else:
+        flash('Please log in to view your study schedule.', 'danger')
         return redirect(url_for('login'))
 
 # Route for logging out

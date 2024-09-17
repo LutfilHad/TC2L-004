@@ -3,187 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Study Sphere - Focus on Your Weak Subjects">
-    <title>Study Sphere - Focus Areas</title>
-    <link rel="stylesheet" href="style.css">
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            function fetchFocusAreas() {
-                fetch('/fetch_schedule')
-                    .then(response => response.json())
-                    .then(data => {
-                        const tbody = document.querySelector('.focus__table tbody');
-                        tbody.innerHTML = '';
-
-                        if (data.length === 0) {
-                            tbody.innerHTML = '<tr><td colspan="2">No subjects to focus on</td></tr>';
-                        } else {
-                            data.forEach(subject => {
-                                const row = document.createElement('tr');
-                                row.innerHTML = `
-                                    <td>${subject.subject}</td>
-                                    <td>${subject.focus_level}</td>
-                                `;
-                                tbody.appendChild(row);
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching focus areas:', error);
-                    });
-            }
-
-            function fetchSchedule() {
-                fetch('/generate_schedule')
-                    .then(response => response.json())
-                    .then(data => {
-                        const scheduleContainer = document.getElementById('schedule-container');
-                        scheduleContainer.innerHTML = '';  
-
-                        if (data.length === 0) {
-                            scheduleContainer.innerHTML = '<p>No schedule available.</p>';
-                        } else {
-                            const ul = document.createElement('ul');
-                            data.forEach(scheduleItem => {
-                                const li = document.createElement('li');
-                                li.textContent = scheduleItem;
-                                ul.appendChild(li);
-                            });
-                            scheduleContainer.appendChild(ul);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error generating schedule:', error);
-                    });
-            }
-
-            fetchFocusAreas();
-
-            document.getElementById('results-form').addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                const formData = new FormData(this);
-
-                fetch('/add_results', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(() => {
-                    fetchFocusAreas();
-                    fetchSchedule(); 
-                })
-                .catch(error => {
-                    console.error('Error submitting results:', error);
-                });
-            });
-
-            document.getElementById('add-subject').addEventListener('click', function () {
-                const subjectContainer = document.getElementById('subjects-container');
-                const subjectCount = subjectContainer.children.length;
-
-                if (subjectCount < 8) {
-                    const newSubjectDiv = document.createElement('div');
-                    newSubjectDiv.className = 'form-group';
-                    newSubjectDiv.innerHTML = `
-                        <label for="subject${subjectCount + 1}">Subject ${subjectCount + 1}:</label>
-                        <input type="text" id="subject${subjectCount + 1}" name="subject${subjectCount + 1}" required>
-                        <label for="grade${subjectCount + 1}">Grade:</label>
-                        <select id="grade${subjectCount + 1}" name="grade${subjectCount + 1}" required>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                            <option value="E">E</option>
-                            <option value="F">F</option>
-                        </select>
-                    `;
-                    subjectContainer.appendChild(newSubjectDiv);
-                }
-            });
-        });
-    </script>
+    <title>Study Schedule Generator</title>
+    <link rel="stylesheet" href="style.css">  <!-- Link to external CSS file -->
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar__container">
-            <a href="/STUDYSPHERE.html" id="navbar__logo">Study Sphere</a>
-            <div class="navbar__toggle" id="mobile-menu" aria-label="Toggle navigation menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <ul class="navbar__menu">
-                <li class="navbar__item">
-                    <a href="/schedule.html" class="navbar__link">Schedule</a>
-                </li>
-                <li class="navbar__item">
-                    <a href="/progress.html" class="navbar__link">Progress</a>
-                </li>
-                <li class="navbar__btn">
-                    <a href="/" class="button">Login</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
-    <div class="hero">
-        <h1>Focus Areas Based on Your Results</h1>
-        <p>Input your recent exam results to see which subjects you need to focus on.</p>
+    <h1>Study Schedule Generator</h1>
+
+    <div id="subjects-container">
+        <!-- Subject inputs will be added here -->
     </div>
 
-    <section class="dashboard">
-        <div class="dashboard__recent-activity">
-            <h2>Input Examination Results</h2>
-            <form id="results-form">
-                <fieldset id="subjects-container">
-                    <legend>Subjects</legend>
-                    <div class="form-group">
-                        <label for="subject1">Subject 1:</label>
-                        <input type="text" id="subject1" name="subject1" required>
-                        <label for="grade1">Grade:</label>
-                        <select id="grade1" name="grade1" required>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                            <option value="E">E</option>
-                            <option value="F">F</option>
-                        </select>
-                    </div>
-                </fieldset>
-                <button type="button" id="add-subject" class="button">Add More Subjects</button>
-                <button type="submit" class="button">Submit Results</button>
-            </form>
-        </div>
+    <button id="add-subject-btn">Add Subject</button>
+    <button id="submit-btn">Submit</button>
 
-        <div class="dashboard__recent-activity">
-            <h2>Subjects to Focus On</h2>
-            <table class="focus__table">
-                <thead>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Focus Level</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-        <div id="schedule-container"></div>
-        <div class="main__img--container">
-            <img src="image/undraw_farming_ni77.svg"
-            alt="pic" id="main__img">
-        </div>
-    </section>
+    <script>
+        let subjectCount = 0;
+        const maxSubjects = 8;
+        const subjectsContainer = document.getElementById('subjects-container');
 
-    <footer>
-        <p>&copy; 2024 Study Sphere. All rights reserved.</p>
-        <ul class="footer__links">
-            <li><a href="/contact.html">Contact</a></li>
-            <li><a href="/about.html">About Us</a></li>
-            <li><a href="/privacy.html">Privacy Policy</a></li>
-        </ul>
-    </footer>
+        document.getElementById('add-subject-btn').addEventListener('click', function() {
+            if (subjectCount < maxSubjects) {
+                const subjectEntry = document.createElement('div');
+                subjectEntry.classList.add('subject-entry');
+                subjectEntry.innerHTML = `
+                    <label for="subject-${subjectCount}">Subject ${subjectCount + 1}:</label>
+                    <input type="text" id="subject-${subjectCount}" placeholder="Enter subject name">
+                    <label for="grade-${subjectCount}">Grade:</label>
+                    <select id="grade-${subjectCount}">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                    </select>
+                `;
+                subjectsContainer.appendChild(subjectEntry);
+                subjectCount++;
+            } else {
+                alert("You can add up to 8 subjects only.");
+            }
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const subjects = [];
+            for (let i = 0; i < subjectCount; i++) {
+                const subjectName = document.getElementById(`subject-${i}`).value;
+                const grade = document.getElementById(`grade-${i}`).value;
+                if (subjectName) {
+                    subjects.push({ name: subjectName, grade: grade });
+                }
+            }
+            
+            if (subjects.length > 0) {
+                // Send data to Flask backend
+                fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ subjects: subjects }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Your schedule has been created. Check the console for details.');
+                    console.log(data.schedule);
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert("Please add at least one subject.");
+            }
+        });
+    </script>
 </body>
 </html>

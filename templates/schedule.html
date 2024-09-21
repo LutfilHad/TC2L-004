@@ -4,30 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Schedule</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='schedule.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="{{ url_for('home') }}" id="navbar__logo">Study Sphere</a>
+            <div class="navbar__toggle" id="mobile-menu" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="{{ url_for('dashboard') if session.get('username') else url_for('login') }}" class="navbar__link">Dashboard</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ url_for('schedule') if session.get('username') else url_for('login') }}" class="navbar__link">Schedule</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/progress.html" class="navbar__link">Progress</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="{{ url_for('login') if not session.get('username') else url_for('logout') }}" class="button">
+                        {{ 'Login' if not session.get('username') else 'Logout' }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+
     <h1>Study Schedule for {{ name }}</h1>
 
-    {% for day, subjects in schedule.items() %}
-        <h2>{{ day }}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <th>Study Hours</th>
-                </tr>
-            </thead>
-            <tbody>
+    <table class="schedule-table">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Subject</th>
+                <th>Study Hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day, subjects in schedule.items() %}
                 {% for subject in subjects %}
                     <tr>
+                        <td>{{ day }}</td>
                         <td>{{ subject.split(":")[0] }}</td>
                         <td>{{ subject.split(":")[1] }}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
-    {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
 
     <a href="{{ url_for('dashboard') }}" class="btn">Back to Dashboard</a>
 </body>

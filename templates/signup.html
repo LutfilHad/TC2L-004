@@ -3,24 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <title>Sign Up</title>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="{{ url_for('home') }}" id="navbar__logo">Study Sphere</a>
+            <div class="navbar__toggle" id="mobile-menu" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="{{ url_for('dashboard') if session.get('username') else url_for('login') }}" class="navbar__link">Dashboard</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="{{ url_for('schedule') if session.get('username') else url_for('login') }}" class="navbar__link">Schedule</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/progress.html" class="navbar__link">Progress</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="{{ url_for('login') if not session.get('username') else url_for('logout') }}" class="button">
+                        {{ 'Login' if not session.get('username') else 'Logout' }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+
     <h2>Sign Up</h2>
     <form method="POST" action="{{ url_for('signup') }}">
         <label>Name:</label>
-        <input type="text" name="name" required>
-        <br>
+        <input type="text" name="name" required><br>
         <label>Age:</label>
-        <input type="number" name="age" required>
-        <br>
+        <input type="number" name="age" required><br>
         <label>Email:</label>
-        <input type="email" name="email" required>
-        <br>
+        <input type="email" name="email" required><br>
         <label>Password:</label>
-        <input type="password" name="password" required>
-        <br>
+        <input type="password" name="password" required><br>
 
         <h3>Recent Exam Results:</h3>
         <div id="exam-results">
@@ -39,39 +64,10 @@
                 <button type="button" onclick="removeSubject(this)">Remove</button>
             </div>
         </div>
-        <button type="button" onclick="addSubject()">Add Another Subject</button>
-        <br>
+        <button type="button" onclick="addSubject()">Add Another Subject</button><br>
         <button type="submit">Sign Up</button>
 
-        <!-- Moved the login section here -->
         <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
     </form>
-
-    <script>
-        function addSubject() {
-            const examResultsDiv = document.getElementById('exam-results');
-            const newSubjectGradeDiv = document.createElement('div');
-            newSubjectGradeDiv.classList.add('subject-grade');
-            newSubjectGradeDiv.innerHTML = `
-                <label>Subject:</label>
-                <input type="text" name="subjects[]" required>
-                <label>Grade:</label>
-                <select name="grades[]" required>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                    <option value="F">F</option>
-                </select>
-                <button type="button" onclick="removeSubject(this)">Remove</button>
-            `;
-            examResultsDiv.appendChild(newSubjectGradeDiv);
-        }
-
-        function removeSubject(button) {
-            button.parentElement.remove();
-        }
-    </script>
 </body>
 </html>

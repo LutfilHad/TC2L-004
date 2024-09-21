@@ -18,20 +18,23 @@
             </div>
             <ul class="navbar__menu">
                 <li class="navbar__item">
-                    <a href="/dashboard.html" class="navbar__link">Dashboard</a>
+                    <a href="{{ url_for('dashboard') if session.get('username') else url_for('login') }}" class="navbar__link">Dashboard</a>
                 </li>
                 <li class="navbar__item">
-                    <a href="/schedule.html" class="navbar__link">Schedule</a>
+                    <a href="{{ url_for('schedule') if session.get('username') else url_for('login') }}" class="navbar__link">Schedule</a>
                 </li>
                 <li class="navbar__item">
                     <a href="/progress.html" class="navbar__link">Progress</a>
                 </li>
                 <li class="navbar__btn">
-                    <a href="{{ url_for('login') }}" class="button">Login</a>
+                    <a href="{{ url_for('login') if not session.get('username') else url_for('logout') }}" class="button">
+                        {{ 'Login' if not session.get('username') else 'Logout' }}
+                    </a>
                 </li>
             </ul>
         </div>
     </nav>
+    
 
     <div class="hero">
         <h1>Welcome to Study Sphere</h1>

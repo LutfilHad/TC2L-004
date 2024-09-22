@@ -3,43 +3,43 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Georgia', serif;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
 }
 
 /* Navbar Styling */
 .navbar {
-    background: linear-gradient(45deg, #fce4ec, #f9d0d9);
+    background: linear-gradient(45deg, #ff80ab, #ff4081);
     height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
     position: sticky;
     top: 0;
-    z-index: 999;
-    width: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .navbar__container {
     display: flex;
     justify-content: space-between;
-    height: 80px;
+    align-items: center;
     width: 100%;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 50px;
+    max-width: 1200px;
+    padding: 0 20px;
 }
 
 #navbar__logo {
-    background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 2.2rem;
-    cursor: pointer;
+    font-size: 2.5rem;
+    color: #fff;
     text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .navbar__menu {
@@ -49,170 +49,173 @@
 }
 
 .navbar__item {
-    margin: 0 10px;
+    margin: 0 15px;
 }
 
 .navbar__link, .button {
-    color: #4a148c;
+    color: #fff;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .navbar__link:hover, .button:hover {
-    color: #26c6da;
-    transform: scale(1.05);
+    background-color: #ff4081;
+    color: white;
+    transform: translateY(-2px);
 }
 
-/* Login and Signup Styling */
-h2 {
-    font-size: 2.5rem;
-    color: #ff0844;
-    text-align: center;
-    margin: 20px 0;
+.navbar__btn .button {
+    background-color: #ff4081;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
 }
 
-form {
-    width: 90%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
+.navbar__btn .button:hover {
+    background-color: #ff80ab;
 }
 
-label {
-    display: block;
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-    color: #4a148c;
-}
-
-input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-button {
-    background: linear-gradient(90deg, #26c6da, #ff0844);
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-    background: linear-gradient(90deg, #ff0844, #26c6da);
-    transform: scale(1.05);
-}
-
-p {
-    text-align: center;
-    font-size: 1rem;
-    color: #4a148c;
-}
-
-p a {
-    color: #ff0844;
-    text-decoration: none;
-}
-
-p a:hover {
-    color: #26c6da;
-}
-
-/* Dynamic Subject Input in Signup */
-.subject-grade {
+/* Hero Section */
+/* Hero Section */
+.hero {
+    position: relative;
+    background-color: #ef95b3; /* Added solid color instead of background image */
+    height: 100vh;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Overlay for text visibility */
+    z-index: -1;
+}
+
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hero .button {
+    background-color: #ff4081;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.hero .button:hover {
+    background-color: #ff80ab;
+}
+
+/* Features Section */
+.features {
+    display: flex;
+    justify-content: space-around;
+    margin: 80px auto;
+    text-align: center;
+    padding: 0 40px;
+}
+
+.feature {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    transition: transform 0.3s ease;
+}
+
+.feature h2 {
+    font-size: 1.8rem;
+    color: #ff4081;
     margin-bottom: 15px;
 }
 
-.subject-grade label, .subject-grade input, .subject-grade select {
-    flex: 1;
-    margin-right: 10px;
+.feature p {
+    font-size: 1.1rem;
+    color: #555;
 }
 
-.subject-grade button {
-    flex: 0.2;
-    background-color: #ff0844;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+.feature:hover {
+    transform: translateY(-10px);
 }
 
-.subject-grade button:hover {
-    background-color: #26c6da;
-}
-
-/* Schedule Section */
-.schedule-container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+/* Testimonials Section */
+.testimonials {
+    background-color: #ffebee;
+    padding: 60px 20px;
     text-align: center;
 }
 
-.schedule-container h2 {
+.testimonials h2 {
     font-size: 2.5rem;
-    color: #ff0844;
-    margin-bottom: 20px;
+    color: #ff4081;
+    margin-bottom: 40px;
 }
 
-.schedule-container p {
+.testimonial {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px; /* Increased margin for better spacing */
+}
+
+.testimonial p {
     font-size: 1.2rem;
-    color: #4a148c;
-    margin-bottom: 20px;
+    color: #555;
 }
 
-.schedule-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+.testimonial span {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
 }
 
-.schedule-table th, .schedule-table td {
-    padding: 12px 20px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-.schedule-table th {
-    background-color: #fce4ec;
-    color: #ff0844;
-}
-
-.schedule-table td {
-    background-color: #f9f9f9;
-    color: #4a148c;
-}
-
-.schedule-table tr:nth-child(even) td {
-    background-color: #fce4ec;
-}
-
-/* Footer Styling */
+/* Footer */
 footer {
     background-color: #333;
-    color: #fff;
-    padding: 40px 20px;
+    color: white;
+    padding: 20px 0;
     text-align: center;
+}
+
+footer p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.footer__links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
 }
 
 .footer__links li {
@@ -220,57 +223,48 @@ footer {
 }
 
 .footer__links a {
-    color: #fff;
+    color: white;
     text-decoration: none;
+    font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .footer__links a:hover {
-    color: #ff0844;
+    color: #ff4081;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .schedule-container h2, .schedule-container p {
-        font-size: 1.5rem;
+    .features {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
     }
 
-    .schedule-table th, .schedule-table td {
-        padding: 10px 15px;
+    .feature {
+        width: 80%;
+        margin-bottom: 20px;
     }
 
-    .schedule-table {
-        font-size: 0.9rem;
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .navbar__container {
+        flex-direction: column;
     }
 
     .navbar__menu {
         flex-direction: column;
     }
-}
-/* Schedule Table Styling */
-.schedule-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    text-align: left; /* Align all text to the left for better readability */
+
+    .navbar__item {
+        margin-bottom: 10px;
+    }
+    
 }
 
-.schedule-table th, .schedule-table td {
-    padding: 12px 20px;
-    border: 1px solid #ddd;
-    text-align: left; /* Ensure all text inside the cells is aligned left */
-}
-
-.schedule-table th {
-    background-color: #fce4ec;
-    color: #ff0844;
-}
-
-.schedule-table td {
-    background-color: #f9f9f9;
-    color: #4a148c;
-}
-
-.schedule-table tr:nth-child(even) td {
-    background-color: #fce4ec;
-}

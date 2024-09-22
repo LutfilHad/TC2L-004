@@ -23,9 +23,7 @@
                 <li class="navbar__item">
                     <a href="{{ url_for('schedule') if session.get('username') else url_for('login') }}" class="navbar__link">Schedule</a>
                 </li>
-                <li class="navbar__item">
-                    <a href="/progress.html" class="navbar__link">Progress</a>
-                </li>
+                
                 <li class="navbar__btn">
                     <a href="{{ url_for('login') if not session.get('username') else url_for('logout') }}" class="button">
                         {{ 'Login' if not session.get('username') else 'Logout' }}
@@ -39,7 +37,7 @@
     <div class="hero">
         <h1>Welcome to Study Sphere</h1>
         <p>Your personalized study assistant. Track your progress, organize your schedule, and reach your goals.</p>
-        <a href="{{ url_for('signup') }}"class="button">Get Started</a>
+        <a href="{{ url_for('dashboard') if session.get('username') else url_for('signup')}}"class="button">Get Started</a>
     </div>
 
     <section class="features">

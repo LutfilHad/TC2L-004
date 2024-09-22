@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
     <title>Sign Up</title>
 </head>
 <body>
@@ -23,9 +23,7 @@
                 <li class="navbar__item">
                     <a href="{{ url_for('schedule') if session.get('username') else url_for('login') }}" class="navbar__link">Schedule</a>
                 </li>
-                <li class="navbar__item">
-                    <a href="/progress.html" class="navbar__link">Progress</a>
-                </li>
+                
                 <li class="navbar__btn">
                     <a href="{{ url_for('login') if not session.get('username') else url_for('logout') }}" class="button">
                         {{ 'Login' if not session.get('username') else 'Logout' }}

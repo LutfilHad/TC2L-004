@@ -5,6 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
     <title>Sign Up</title>
+    <script>
+        // Function to add a new subject input field
+        function addSubject() {
+            const examResultsDiv = document.getElementById('exam-results');
+            
+            // Create a new div for the subject-grade pair
+            const newSubjectDiv = document.createElement('div');
+            newSubjectDiv.classList.add('subject-grade');
+            
+            // Add Subject label and input
+            const subjectLabel = document.createElement('label');
+            subjectLabel.textContent = 'Subject:';
+            newSubjectDiv.appendChild(subjectLabel);
+            
+            const subjectInput = document.createElement('input');
+            subjectInput.type = 'text';
+            subjectInput.name = 'subjects[]';
+            subjectInput.required = true;
+            newSubjectDiv.appendChild(subjectInput);
+            
+            // Add Grade label and select
+            const gradeLabel = document.createElement('label');
+            gradeLabel.textContent = 'Grade:';
+            newSubjectDiv.appendChild(gradeLabel);
+            
+            const gradeSelect = document.createElement('select');
+            gradeSelect.name = 'grades[]';
+            gradeSelect.required = true;
+            
+            const grades = ['A', 'B', 'C', 'D', 'E', 'F'];
+            grades.forEach(grade => {
+                const option = document.createElement('option');
+                option.value = grade;
+                option.textContent = grade;
+                gradeSelect.appendChild(option);
+            });
+            newSubjectDiv.appendChild(gradeSelect);
+            
+            // Add remove button
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function() {
+                removeSubject(this);
+            };
+            newSubjectDiv.appendChild(removeButton);
+            
+            // Append the new subject-grade div to the exam results div
+            examResultsDiv.appendChild(newSubjectDiv);
+        }
+        
+        // Function to remove a subject input field
+        function removeSubject(button) {
+            const subjectDiv = button.parentElement;
+            subjectDiv.remove();
+        }
+    </script>
 </head>
 <body>
     <!-- Navbar -->
@@ -32,7 +89,6 @@
             </ul>
         </div>
     </nav>
-    
 
     <h2>Sign Up</h2>
     <form method="POST" action="{{ url_for('signup') }}">

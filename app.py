@@ -29,13 +29,9 @@ def init_db():
         ''')
         conn.commit()
 
-@app.before_first_request
-def setup():
-    init_db()
-
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('')
 
 @app.route('/schedule.html')
 def schedule():

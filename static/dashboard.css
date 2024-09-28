@@ -1,0 +1,135 @@
+/* General Dashboard Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #FFEFF3; /* Light pink background */
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  color: #ff4081; /* Pink headings */
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(45deg, #ff80ab, #ff4081);
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+#navbar__logo {
+  font-size: 2.5rem;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.navbar__item {
+  margin: 0 15px;
+}
+
+.navbar__link, .button {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navbar__link:hover, .button:hover {
+  background-color: #ff4081;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.navbar__btn .button {
+  background-color: #ff4081;
+  padding: 0.7rem 1.5rem;
+  font-weight: bold;
+}
+
+.navbar__btn .button:hover {
+  background-color: #ff80ab;
+  transform: translateY(-2px);
+}
+
+/* Dashboard Content */
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: #FFFFFF;
+  padding: 30px;
+  border: 2px solid #ff4081; /* Pink border */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.info h3 {
+  color: #ff4081; /* Pink headings inside container */
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 16px;
+  color: #ff80ab; /* Light pink paragraph text */
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li {
+  font-size: 16px;
+  color: #ff4081; /* Pink list items */
+  margin-bottom: 5px;
+}
+
+/* Buttons inside actions */
+.actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.actions .btn {
+  display: inline-block;
+  margin: 0 10px; /* Spacing between buttons */
+  background-color: #ff4081; /* Pink button */
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.actions .btn:hover {
+  background-color: #ff80ff; /* Hover with consistent light pink */
+  transform: translateY(-2px);
+}

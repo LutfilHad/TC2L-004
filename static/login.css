@@ -1,0 +1,192 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #FFEFF3; /* Light pink background */
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  color: #c0c53d; /* Pink heading color */
+  text-align: center;
+  font-weight: bold;
+}
+
+p, label {
+  font-size: 16px;
+  color: #ff4081; /* Pink text for labels */
+}
+
+
+/* Updated Navbar */
+.navbar {
+  background: linear-gradient(45deg, #ff80ab, #ff4081);
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+#navbar__logo {
+  font-size: 2.5rem;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.navbar__item {
+  margin: 0 15px;
+}
+
+.navbar__link, .button {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navbar__link:hover, .button:hover {
+  background-color: #c0c53d;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.navbar__btn .button {
+  background-color: #ff4081;
+  padding: 0.7rem 1.5rem;
+  font-weight: bold;
+}
+
+.navbar__btn .button:hover {
+  background-color: #ff80ab;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FFFFFF; 
+  border: 2px solid #ff4081; 
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+form label, form input, form select {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+form input[type="email"], 
+form input[type="password"], 
+form input[type="text"], 
+form input[type="number"], 
+form select {
+  padding: 10px;
+  border: 1px solid #ff4081; /* Pink input borders */
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button, .btn {
+  background-color: #ff4081; /* Pink button */
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover, .btn:hover {
+  background-color: #ff80ab;
+}
+
+/* Flash Messages */
+ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+li.success {
+  color: #c0c53d; /* Pink for success messages */
+}
+
+li.error {
+  color: red;
+}
+
+/* Table Styles */
+table {
+  width: 80%;
+  margin: 40px auto;
+  border-collapse: collapse;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #ff4081; /* Pink borders */
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #fb6e9d; /* Pink for table headers */
+  color: white;
+  font-size: 18px;
+}
+
+td {
+  background-color: #e498bc; /* Lighter pink for table cells */
+  color: white;
+  font-size: 16px;
+}
+
+/* Style for Day Column */
+td:first-child {
+  background-color: #e473c1; /* Darker pink for the Day column */
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+a.btn {
+  display: block;
+  width: fit-content;
+  margin: 20px auto;
+  background-color: #ff4081; /* Pink button for links */
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+a.btn:hover {
+  background-color: #ff80ff;
+}

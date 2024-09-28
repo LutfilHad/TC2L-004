@@ -1,0 +1,144 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #FFEFF3; /* Light pink background */
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  color: #ff4081; /* Pink heading */
+  text-align: center;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+/* Navbar Styles */
+.navbar {
+  background: linear-gradient(45deg, #ff80ab, #ff4081);
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+#navbar__logo {
+  font-size: 2.5rem;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.navbar__item {
+  margin: 0 15px;
+}
+
+.navbar__link, .button {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navbar__link:hover, .button:hover {
+  background-color: #ff4081;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.navbar__btn .button {
+  background-color: #ff4081;
+  padding: 0.7rem 1.5rem;
+  font-weight: bold;
+}
+
+.navbar__btn .button:hover {
+  background-color: #ff80ab;
+}
+
+/* Edit Exam Results Form Styles */
+form {
+  max-width: 600px;
+  margin: 30px auto;
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ff4081;
+}
+
+.subject-grade {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.subject-grade label {
+  margin-right: 10px;
+  color: #ff4081; /* Pink labels */
+  font-weight: bold;
+}
+
+.subject-grade input[type="text"],
+.subject-grade select {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ff4081;
+  border-radius: 4px;
+  background-color: #fff5f8; /* Light background for input fields */
+}
+
+.subject-grade button {
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.subject-grade button:hover {
+  background-color: #ff80ff;
+  transform: translateY(-2px);
+}
+
+button[type="button"],
+button[type="submit"] {
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[type="button"]:hover,
+button[type="submit"]:hover {
+  background-color: #ff80ff;
+  transform: translateY(-2px);
+}

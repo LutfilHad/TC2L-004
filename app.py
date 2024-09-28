@@ -40,7 +40,7 @@ def generate_schedule(exam_results):
     non_weak_subjects = {subject: grade for subject, grade in exam_results.items() if grade not in weak_grades}
 
     # Determine hours per subject (longer for weak subjects)
-    weak_hours = total_hours_per_week * 0.7  # 70% of time for weak subjects
+    weak_hours = total_hours_per_week * 0.6  # 70% of time for weak subjects
     non_weak_hours = total_hours_per_week * 0.3  # 30% for stronger subjects
 
     if weak_subjects:
@@ -184,6 +184,37 @@ def schedule():
         return render_template('schedule.html', name=session['name'], schedule=study_schedule)
     else:
         flash('Please log in to view your study schedule.', 'danger')
+        return redirect(url_for('login'))
+
+# Route for editing exam results
+@app.route('/edit_exam_results/', methods=['GET', 'POST'])
+def edit_exam_results():
+    if 'username' in session:
+        if request.method == 'POST':
+            subjects = request.form.getlist('subjects[]')
+            grades = request.form.getlist('grades[]')
+
+            # Convert updated exam results to JSON
+            updated_exam_results = dict(zip(subjects, grades))
+            updated_exam_results_json = json.dumps(updated_exam_results)
+
+            # Update the exam results in the database
+            user_id = session['user_id']
+            with sqlite3.connect('all.db') as con:
+                cur = con.cursor()
+                cur.execute("UPDATE users SET exam_results = ? WHERE id = ?", (updated_exam_results_json, user_id))
+                con.commit()
+
+            # Update session data
+            session['exam_results'] = updated_exam_results_json
+            flash('Exam results updated successfully!', 'success')
+            return redirect(url_for('dashboard'))
+        
+        # Load current exam results to pre-fill the form
+        exam_results = json.loads(session['exam_results'])
+        return render_template('edit_exam_results.html', exam_results=exam_results)
+    else:
+        flash('Please log in to edit your exam results.', 'danger')
         return redirect(url_for('login'))
 
 # Route for logging out

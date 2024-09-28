@@ -7,7 +7,7 @@ body {
 }
 
 h1, h2, h3 {
-  color: #ff4081; /* Pink heading color */
+  color: #c0c53d; /* Pink heading color */
   text-align: center;
   font-weight: bold;
 }
@@ -67,7 +67,7 @@ p, label {
 }
 
 .navbar__link:hover, .button:hover {
-  background-color: #ff4081;
+  background-color: #c0c53d;
   color: white;
   transform: translateY(-2px);
 }
@@ -87,8 +87,8 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FFFFFF; /* White form background */
-  border: 2px solid #ff4081; /* Pink border */
+  background-color: #FFFFFF; 
+  border: 2px solid #ff4081; 
   border-radius: 10px;
   padding: 30px;
   max-width: 500px;
@@ -134,7 +134,7 @@ ul {
 }
 
 li.success {
-  color: #ff4081; /* Pink for success messages */
+  color: #c0c53d; /* Pink for success messages */
 }
 
 li.error {

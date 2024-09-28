@@ -14,7 +14,7 @@ body {
 
 /* Navbar Styling */
 .navbar {
-    background: linear-gradient(45deg, #ff80ab, #ff4081);
+    background: linear-gradient(45deg, #ff80ab, #f76998);
     height: 80px;
     display: flex;
     justify-content: center;
@@ -61,7 +61,7 @@ body {
 }
 
 .navbar__link:hover, .button:hover {
-    background-color: #ff4081;
+    background-color: #c0c53d;
     color: white;
     transform: translateY(-2px);
 }
@@ -80,7 +80,7 @@ body {
 /* Hero Section */
 .hero {
     position: relative;
-    background-color: #ef95b3; /* Added solid color instead of background image */
+    background-color: #bf7c91; 
     height: 100vh;
     display: flex;
     flex-direction: column;

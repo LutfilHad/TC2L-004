@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='editexam.css') }}">
+    <title>Edit Exam Results</title>
+    <script>
+        // Function to add a new subject input field
+        function addSubject() {
+            const examResultsDiv = document.getElementById('exam-results');
+            
+            // Create a new div for the subject-grade pair
+            const newSubjectDiv = document.createElement('div');
+            newSubjectDiv.classList.add('subject-grade');
+            
+            // Add Subject label and input
+            const subjectLabel = document.createElement('label');
+            subjectLabel.textContent = 'Subject:';
+            newSubjectDiv.appendChild(subjectLabel);
+            
+            const subjectInput = document.createElement('input');
+            subjectInput.type = 'text';
+            subjectInput.name = 'subjects[]';
+            subjectInput.required = true;
+            newSubjectDiv.appendChild(subjectInput);
+            
+            // Add Grade label and select
+            const gradeLabel = document.createElement('label');
+            gradeLabel.textContent = 'Grade:';
+            newSubjectDiv.appendChild(gradeLabel);
+            
+            const gradeSelect = document.createElement('select');
+            gradeSelect.name = 'grades[]';
+            gradeSelect.required = true;
+            
+            const grades = ['A', 'B', 'C', 'D', 'E', 'F'];
+            grades.forEach(grade => {
+                const option = document.createElement('option');
+                option.value = grade;
+                option.textContent = grade;
+                gradeSelect.appendChild(option);
+            });
+            newSubjectDiv.appendChild(gradeSelect);
+            
+            // Add remove button
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function() {
+                removeSubject(this);
+            };
+            newSubjectDiv.appendChild(removeButton);
+            
+            // Append the new subject-grade div to the exam results div
+            examResultsDiv.appendChild(newSubjectDiv);
+        }
+        
+        // Function to remove a subject input field
+        function removeSubject(button) {
+            const subjectDiv = button.parentElement;
+            subjectDiv.remove();
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="{{ url_for('home') }}" id="navbar__logo">Study Sphere</a>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="{{ url_for('dashboard') }}" class="navbar__link">Dashboard</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="{{ url_for('logout') }}" class="button">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2>Edit Exam Results</h2>
+    <form method="POST" action="{{ url_for('edit_exam_results') }}">
+        <div id="exam-results">
+            {% for subject, grade in exam_results.items() %}
+            <div class="subject-grade">
+                <label>Subject:</label>
+                <input type="text" name="subjects[]" value="{{ subject }}" required>
+                <label>Grade:</label>
+                <select name="grades[]" required>
+                    <option value="A" {% if grade == 'A' %}selected{% endif %}>A</option>
+                    <option value="B" {% if grade == 'B' %}selected{% endif %}>B</option>
+                    <option value="C" {% if grade == 'C' %}selected{% endif %}>C</option>
+                    <option value="D" {% if grade == 'D' %}selected{% endif %}>D</option>
+                    <option value="E" {% if grade == 'E' %}selected{% endif %}>E</option>
+                    <option value="F" {% if grade == 'F' %}selected{% endif %}>F</option>
+                </select>
+                <button type="button" onclick="removeSubject(this)">Remove</button>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" onclick="addSubject()">Add Another Subject</button><br>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

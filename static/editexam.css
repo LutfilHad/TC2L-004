@@ -1,4 +1,4 @@
-/* General Dashboard Styles */
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #FFEFF3; /* Light pink background */
@@ -6,13 +6,14 @@ body {
   padding: 0;
 }
 
-h1, h2, h3 {
-  color: #ff4081; /* Pink headings */
+h2 {
+  color: #ff4081; /* Pink heading */
   text-align: center;
   font-weight: bold;
+  margin-top: 30px;
 }
 
-/* Navbar */
+/* Navbar Styles */
 .navbar {
   background: linear-gradient(45deg, #ff80ab, #ff4081);
   height: 80px;
@@ -74,62 +75,70 @@ h1, h2, h3 {
 
 .navbar__btn .button:hover {
   background-color: #ff80ab;
+}
+
+/* Edit Exam Results Form Styles */
+form {
+  max-width: 600px;
+  margin: 30px auto;
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ff4081;
+}
+
+.subject-grade {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.subject-grade label {
+  margin-right: 10px;
+  color: #ff4081; /* Pink labels */
+  font-weight: bold;
+}
+
+.subject-grade input[type="text"],
+.subject-grade select {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ff4081;
+  border-radius: 4px;
+  background-color: #fff5f8; /* Light background for input fields */
+}
+
+.subject-grade button {
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.subject-grade button:hover {
+  background-color: #ff80ff;
   transform: translateY(-2px);
 }
 
-/* Dashboard Content */
-.container {
-  max-width: 800px;
-  margin: 50px auto;
-  background-color: #FFFFFF;
-  padding: 30px;
-  border: 2px solid #ff4081; /* Pink border */
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.info h3 {
-  color: #ff4081; /* Pink headings inside container */
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-p {
-  font-size: 16px;
-  color: #ff80ab; /* Light pink paragraph text */
-}
-
-ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-ul li {
-  font-size: 16px;
-  color: #ff4081; /* Pink list items */
-  margin-bottom: 5px;
-}
-
-/* Buttons inside actions */
-.actions {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.actions .btn {
-  display: inline-block;
-  margin: 0 10px; /* Spacing between buttons */
-  background-color: #ff4081; /* Pink button */
+button[type="button"],
+button[type="submit"] {
+  background-color: #ff4081;
   color: white;
-  padding: 10px 20px;
-  text-decoration: none;
   border: none;
+  padding: 10px 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.actions .btn:hover {
-  background-color: #ff80ff; /* Hover with consistent light pink */
+button[type="button"]:hover,
+button[type="submit"]:hover {
+  background-color: #ff80ff;
   transform: translateY(-2px);
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ name }}</h2>
+        <div class="info">
+            <h3>Your Details</h3>
+            <p><strong>Name:</strong> {{ name }}</p>
+            <p><strong>Email:</strong> {{ email }}</p>
+            <p><strong>Age:</strong> {{ age }}</p>
+            <h3>Recent Exam Results:</h3>
+            <ul>
+                {% for subject, grade in exam_results.items() %}
+                    <li><strong>{{ subject }}:</strong> {{ grade }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+        <div class="actions">
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+    
+</body>
+</html>
+ 

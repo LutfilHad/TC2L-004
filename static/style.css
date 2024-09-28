@@ -1,0 +1,270 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: linear-gradient(45deg, #ff80ab, #f76998);
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+#navbar__logo {
+    font-size: 2.5rem;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.navbar__menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.navbar__item {
+    margin: 0 15px;
+}
+
+.navbar__link, .button {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar__link:hover, .button:hover {
+    background-color: #c0c53d;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.navbar__btn .button {
+    background-color: #ff4081;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+}
+
+.navbar__btn .button:hover {
+    background-color: #ff80ab;
+}
+
+/* Hero Section */
+/* Hero Section */
+.hero {
+    position: relative;
+    background-color: #bf7c91; 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Overlay for text visibility */
+    z-index: -1;
+}
+
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hero .button {
+    background-color: #ff4081;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.hero .button:hover {
+    background-color: #ff80ab;
+}
+
+/* Features Section */
+.features {
+    display: flex;
+    justify-content: space-around;
+    margin: 80px auto;
+    text-align: center;
+    padding: 0 40px;
+}
+
+.feature {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    transition: transform 0.3s ease;
+}
+
+.feature h2 {
+    font-size: 1.8rem;
+    color: #ff4081;
+    margin-bottom: 15px;
+}
+
+.feature p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+}
+
+/* Testimonials Section */
+.testimonials {
+    background-color: #ffebee;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.testimonials h2 {
+    font-size: 2.5rem;
+    color: #ff4081;
+    margin-bottom: 40px;
+}
+
+.testimonial {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px; /* Increased margin for better spacing */
+}
+
+.testimonial p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.testimonial span {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.footer__links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.footer__links li {
+    margin: 0 15px;
+}
+
+.footer__links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.footer__links a:hover {
+    color: #ff4081;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .features {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .feature {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .navbar__container {
+        flex-direction: column;
+    }
+
+    .navbar__menu {
+        flex-direction: column;
+    }
+
+    .navbar__item {
+        margin-bottom: 10px;
+    }
+    
+}
+

@@ -33,60 +33,45 @@ def generate_schedule(exam_results):
     total_hours_per_week = 20  # Total hours to distribute among subjects
     max_hours_per_day = 3  # Maximum hours of study per day
     weak_grades = ['F', 'D', 'E']  # Grades considered weak
-    subjects = exam_results.keys()
 
-    # Assign more time to weak subjects
+    # Split subjects into weak and non-weak categories
     weak_subjects = {subject: grade for subject, grade in exam_results.items() if grade in weak_grades}
     non_weak_subjects = {subject: grade for subject, grade in exam_results.items() if grade not in weak_grades}
 
-    # Determine hours per subject (longer for weak subjects)
-    weak_hours = total_hours_per_week * 0.6  # 70% of time for weak subjects
-    non_weak_hours = total_hours_per_week * 0.3  # 30% for stronger subjects
+    # Calculate the total number of subjects in each category
+    num_weak_subjects = len(weak_subjects)
+    num_non_weak_subjects = len(non_weak_subjects)
 
-    if weak_subjects:
-        hours_per_weak_subject = weak_hours / len(weak_subjects)
+    # Allocate hours proportionally
+    if num_weak_subjects > 0:
+        weak_hours_per_subject = (total_hours_per_week * 0.7) / num_weak_subjects  # 70% of time for weak subjects
     else:
-        hours_per_weak_subject = 0
+        weak_hours_per_subject = 0
 
-    if non_weak_subjects:
-        hours_per_non_weak_subject = non_weak_hours / len(non_weak_subjects)
+    if num_non_weak_subjects > 0:
+        non_weak_hours_per_subject = (total_hours_per_week * 0.3) / num_non_weak_subjects  # 30% of time for non-weak subjects
     else:
-        hours_per_non_weak_subject = 0
+        non_weak_hours_per_subject = 0
 
-    # Distribute subjects across the days
+    # List of all subjects with corresponding study hours
+    subjects_with_hours = [(subject, weak_hours_per_subject) for subject in weak_subjects] + [(subject, non_weak_hours_per_subject) for subject in non_weak_subjects]
+
+    # Assign subjects to each day, ensuring balance and maximum 2 subjects per day
     days = list(schedule.keys())
     day_index = 0
 
-    # Helper function to add subjects to the schedule
-    def add_to_schedule(subject, hours):
-        nonlocal day_index
-        hours_left = hours
-        while hours_left > 0:
-            available_hours = min(max_hours_per_day, hours_left)
-            day_schedule = schedule[days[day_index]]
+    for subject, hours in subjects_with_hours:
+        while hours > 0:
+            # Get the available hours for the current day
+            available_hours = min(max_hours_per_day - sum(float(item.split(": ")[1].split()[0]) for item in schedule[days[day_index]]), hours)
             
-            # If there's room for another subject on the same day
-            if len(day_schedule) < 2 and (day_schedule and available_hours <= 3 - sum(float(item.split(":")[1].split()[0]) for item in day_schedule)):
-                day_schedule.append(f"{subject}: {round(available_hours, 2)} hours")
-                hours_left -= available_hours
-                day_index = (day_index + 1) % 7  # Move to the next day
+            # If there's room for another subject on the current day
+            if len(schedule[days[day_index]]) < 2 and available_hours > 0:
+                schedule[days[day_index]].append(f"{subject}: {round(available_hours, 2)} hours")
+                hours -= available_hours
             else:
-                # Move to the next day if no room or it's the end of the day
+                # Move to the next day
                 day_index = (day_index + 1) % 7
-                if len(schedule[days[day_index]]) < 2:
-                    day_schedule = schedule[days[day_index]]
-                    day_schedule.append(f"{subject}: {round(available_hours, 2)} hours")
-                    hours_left -= available_hours
-                else:
-                    day_index = (day_index + 1) % 7  # Continue to the next day
-
-    # Assign hours for weak subjects
-    for subject in weak_subjects:
-        add_to_schedule(subject, hours_per_weak_subject)
-
-    # Assign hours for non-weak subjects
-    for subject in non_weak_subjects:
-        add_to_schedule(subject, hours_per_non_weak_subject)
 
     return schedule
 

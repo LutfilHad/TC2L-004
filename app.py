@@ -27,34 +27,22 @@ def init_sqlite_db():
 # Call the function to initialize the database
 init_sqlite_db()
 
-# Helper function to generate the study schedule
 def generate_schedule(exam_results):
     schedule = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": [], "Saturday": [], "Sunday": []}
-    total_hours_per_week = 20  # Total hours to distribute among subjects
     max_hours_per_day = 3  # Maximum hours of study per day
-    weak_grades = ['F', 'D', 'E']  # Grades considered weak
 
-    # Split subjects into weak and non-weak categories
-    weak_subjects = {subject: grade for subject, grade in exam_results.items() if grade in weak_grades}
-    non_weak_subjects = {subject: grade for subject, grade in exam_results.items() if grade not in weak_grades}
+    # Define study hours per grade
+    grade_hours_mapping = {
+        'A': 1.0,    
+        'B': 1.5,    
+        'C': 2.0,    
+        'D': 2.5,  
+        'E': 3.0,  
+        'F': 3.5   
+    }
 
-    # Calculate the total number of subjects in each category
-    num_weak_subjects = len(weak_subjects)
-    num_non_weak_subjects = len(non_weak_subjects)
-
-    # Allocate hours proportionally
-    if num_weak_subjects > 0:
-        weak_hours_per_subject = (total_hours_per_week * 0.7) / num_weak_subjects  # 70% of time for weak subjects
-    else:
-        weak_hours_per_subject = 0
-
-    if num_non_weak_subjects > 0:
-        non_weak_hours_per_subject = (total_hours_per_week * 0.3) / num_non_weak_subjects  # 30% of time for non-weak subjects
-    else:
-        non_weak_hours_per_subject = 0
-
-    # List of all subjects with corresponding study hours
-    subjects_with_hours = [(subject, weak_hours_per_subject) for subject in weak_subjects] + [(subject, non_weak_hours_per_subject) for subject in non_weak_subjects]
+    # Create a list of subjects with their respective study hours based on the grades
+    subjects_with_hours = [(subject, grade_hours_mapping.get(grade, 1.0)) for subject, grade in exam_results.items()]
 
     # Assign subjects to each day, ensuring balance and maximum 2 subjects per day
     days = list(schedule.keys())
@@ -64,7 +52,7 @@ def generate_schedule(exam_results):
         while hours > 0:
             # Get the available hours for the current day
             available_hours = min(max_hours_per_day - sum(float(item.split(": ")[1].split()[0]) for item in schedule[days[day_index]]), hours)
-            
+
             # If there's room for another subject on the current day
             if len(schedule[days[day_index]]) < 2 and available_hours > 0:
                 schedule[days[day_index]].append(f"{subject}: {round(available_hours, 2)} hours")
@@ -179,18 +167,15 @@ def edit_exam_results():
             subjects = request.form.getlist('subjects[]')
             grades = request.form.getlist('grades[]')
 
-            # Convert updated exam results to JSON
             updated_exam_results = dict(zip(subjects, grades))
             updated_exam_results_json = json.dumps(updated_exam_results)
-
-            # Update the exam results in the database
             user_id = session['user_id']
             with sqlite3.connect('all.db') as con:
                 cur = con.cursor()
                 cur.execute("UPDATE users SET exam_results = ? WHERE id = ?", (updated_exam_results_json, user_id))
                 con.commit()
 
-            # Update session data
+            
             session['exam_results'] = updated_exam_results_json
             flash('Exam results updated successfully!', 'success')
             return redirect(url_for('dashboard'))
